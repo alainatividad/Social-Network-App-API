@@ -14,12 +14,12 @@ const getAllUsers = async (req, res) => {
 // get one user
 const getSingleUser = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.userId })
-      .select("-__v")
-      .lean();
+    //check if passed userId exists
+    const user = await User.findOne({ _id: req.params.userId });
 
+    //if not, return 404 error
     if (!user) {
-      res.json(404).json({ message: "No user with that ID" });
+      res.status(404).json({ message: "No user with that ID" });
     }
     res.json(user);
   } catch (error) {
@@ -38,18 +38,17 @@ const createUser = async (req, res) => {
 
 const addFriend = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.userId })
-      .select("-__v")
-      .lean();
+    //check if both user and friend exist
+    const user = await User.findOne({ _id: req.params.userId });
 
-    const newFriend = await User.findOne({ _id: req.params.friendId })
-      .select("-__v")
-      .lean();
+    const newFriend = await User.findOne({ _id: req.params.friendId });
 
+    //if either doesn't exist, don't continue with adding and return error
     if (!user || !newFriend) {
-      res.json(404).json({ message: "No user with that ID" });
+      res.status(404).json({ message: "No user with that ID" });
     }
 
+    //else update user's friends array with the friendId
     const updateUser = await User.updateOne(
       { _id: req.params.userId },
       { $addToSet: { friends: req.params.friendId } },
