@@ -10,17 +10,32 @@ const getAllThoughts = async (req, res) => {
   }
 };
 
+const getSingleThought = async (req, res) => {
+  try {
+    const thought = await Thought.findOne({ _id: req.params.thoughtId });
+
+    if (!thought) {
+      return res.status(404).json({ message: "No thought with that ID" });
+    }
+
+    res.json(thought);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 const createThought = async (req, res) => {
   try {
     const user = await User.findOne({
       _id: req.body.userId,
     });
+
     if (!user) {
-      res.status(404).json({ message: "No user with that ID" });
+      return res.status(404).json({ message: "No user with that ID" });
     }
 
     let thoughtId;
-    const newThought = await Thought.create(
+    Thought.create(
       {
         thoughtText: req.body.thoughtText,
         username: req.body.username,
@@ -47,7 +62,28 @@ const createThought = async (req, res) => {
   }
 };
 
+const addReaction = async (req, res) => {
+  try {
+    const thought = await Thought.findOne({ _id: req.params.thoughtId });
+
+    if (!thought) {
+      return res.status(404).json({ message: "No thought with that ID" });
+    }
+
+    const updateThought = await Thought.updateOne(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true }
+    );
+
+    res.json(updateThought);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 module.exports = {
   getAllThoughts,
+  getSingleThought,
   createThought,
+  addReaction,
 };

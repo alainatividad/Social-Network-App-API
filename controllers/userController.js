@@ -19,7 +19,7 @@ const getSingleUser = async (req, res) => {
 
     //if not, return 404 error
     if (!user) {
-      res.status(404).json({ message: "No user with that ID" });
+      return res.status(404).json({ message: "No user with that ID" });
     }
     res.json(user);
   } catch (error) {
@@ -45,7 +45,7 @@ const addFriend = async (req, res) => {
 
     //if either doesn't exist, don't continue with adding and return error
     if (!user || !newFriend) {
-      res.status(404).json({ message: "No user with that ID" });
+      return res.status(404).json({ message: "No user with that ID" });
     }
 
     //else update user's friends array with the friendId
