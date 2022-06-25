@@ -36,31 +36,6 @@ const createUser = async (req, res) => {
   }
 };
 
-const addFriend = async (req, res) => {
-  try {
-    //check if both user and friend exist
-    const user = await User.findOne({ _id: req.params.userId });
-
-    const newFriend = await User.findOne({ _id: req.params.friendId });
-
-    //if either doesn't exist, don't continue with adding and return error
-    if (!user || !newFriend) {
-      return res.status(404).json({ message: "No user with that ID" });
-    }
-
-    //else update user's friends array with the friendId
-    const updateUser = await User.findOneandUpdate(
-      { _id: req.params.userId },
-      { $addToSet: { friends: req.params.friendId } },
-      { runValidators: true, new: true }
-    );
-
-    res.json(updateUser);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-};
-
 const modifyUser = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.userId });
@@ -112,6 +87,56 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const addFriend = async (req, res) => {
+  try {
+    //check if both user and friend exist
+    const user = await User.findOne({ _id: req.params.userId });
+
+    const newFriend = await User.findOne({ _id: req.params.friendId });
+
+    //if either doesn't exist, don't continue with adding and return error
+    if (!user || !newFriend) {
+      return res.status(404).json({ message: "No user with that ID" });
+    }
+
+    //else update user's friends array with the friendId
+    const updateUser = await User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+      { runValidators: true, new: true }
+    );
+
+    res.json(updateUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const deleteFriend = async (req, res) => {
+  try {
+    //check if both user and friend exist
+    const user = await User.findOne({ _id: req.params.userId });
+
+    const newFriend = await User.findOne({ _id: req.params.friendId });
+
+    //if either doesn't exist, don't continue with adding and return error
+    if (!user || !newFriend) {
+      return res.status(404).json({ message: "No user with that ID" });
+    }
+
+    //else update user's friends array with the friendId
+    const updateUser = await User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      { runValidators: true, new: true }
+    );
+
+    res.json(updateUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getSingleUser,
@@ -119,4 +144,5 @@ module.exports = {
   addFriend,
   modifyUser,
   deleteUser,
+  deleteFriend,
 };
