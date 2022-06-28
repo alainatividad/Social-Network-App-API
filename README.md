@@ -147,9 +147,21 @@ The following videos show the web application's functionality:
 
 ### Starting of the Application's Server and Testing of all User Routes
 
+
+https://user-images.githubusercontent.com/99376802/176184712-46c93866-e4d7-4156-9f85-bf3f3dccb0af.mp4
+
+
 ### Testing of all Thoughts Routes
 
+
+https://user-images.githubusercontent.com/99376802/176184729-d0c14491-431f-44e3-96c4-a34f4593f7c7.mp4
+
+
 ### Testing of all Friends and Reactions Routes
+
+
+https://user-images.githubusercontent.com/99376802/176184737-610cfc13-15dd-461c-ab0c-3fc0950f591c.mp4
+
 
 ## Installation
 
