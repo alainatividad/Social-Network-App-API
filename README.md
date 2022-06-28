@@ -1,8 +1,8 @@
-# E-commnerce Back End
+# Social Network Application API
 
 ## Description
 
-This application is an Express.js API that interacts with MongoDB that serves as a back end for an social networking site where users can share their thoughts, react to friends’ thoughts, and create a friend list. The application uses Express.js for routing, a MongoDB database, and the Mongoose ODM.
+This application is an Express.js API that interacts with MongoDB that generates an API for an social networking site where users can share their thoughts, react to friends’ thoughts, and create a friend list. The application uses Express.js for routing, a MongoDB database, and the Mongoose ODM.
 
 ### Database Models
 
